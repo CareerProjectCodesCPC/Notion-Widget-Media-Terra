@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Daily Stoic Quote</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;800&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      width: 720px;
+      height: 405px;
+      background-color: #2F3438;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .frame {
+      position: relative;
+      width: 506px;
+      height: 281px;
+      background: url('https://images.unsplash.com/photo-1534106474077-f9e9c6f5a47c?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8ZG9sb21pdGVzfGVufDB8fDB8fHww') center/cover no-repeat;
+      border: 6px solid white;
+      border-radius: 20px;
+      color: white;
+      font-family: 'Playfair Display', serif;
+      padding: 20px;
+      box-sizing: border-box;
+      overflow: hidden;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .quote, .source {
+      position: relative;
+      z-index: 10;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      hyphens: auto;
+    }
+    .quote {
+      flex: 1;
+      font-size: clamp(18px, 2.8vh, 26px);
+      font-weight: 600;
+      line-height: 1.3;
+      display: flex;
+      align-items: center;
+    }
+    .source {
+      font-size: clamp(20px, 3vh, 30px);
+      font-weight: 800;
+      align-self: flex-start;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="frame">
+    <div class="quote" id="quote">Loading quote...</div>
+    <div class="source" id="source"></div>
+  </div>
+
+  <script src="quotes.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      function getQuoteOfTheDay() {
+        const now = new Date();
+        const melTime = new Date(now.toLocaleString("en-US", {timeZone: "Australia/Melbourne"}));
+        const startOfYear = new Date(melTime.getFullYear(), 0, 1);
+        const dayOfYear = Math.floor((melTime - startOfYear) / 86400000);
+        const index = dayOfYear % quotes.length;
+        return quotes[index];
+      }
+      const todayQuote = getQuoteOfTheDay();
+      document.getElementById('quote').innerText = `“${todayQuote.quote}”`;
+      document.getElementById('source').innerText = `— ${todayQuote.source}`;
+    });
+  </script>
+</body>
+</html>
